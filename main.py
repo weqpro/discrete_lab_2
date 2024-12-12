@@ -112,7 +112,18 @@ def iterative_adjacency_dict_bfs(graph: dict[int, list[int]], start: int) -> lis
     >>> iterative_adjacency_dict_bfs({0: [1, 2], 1: [0, 2, 3], 2: [0, 1], 3: []}, 0)
     [0, 1, 2, 3]
     """
-    pass
+    ans = []
+    q = deque()
+    q.append(start)
+    while q:
+        vertex = q.popleft()
+        if vertex not in ans:
+            ans.append(vertex)
+            graph[vertex] = sorted(graph[vertex])
+            for neighbor in graph[vertex]:
+                if neighbor not in ans:
+                    q.append(neighbor)
+    return ans
 
 
 def iterative_adjacency_matrix_bfs(graph: list[list[int]], start: int) ->list[int]:
@@ -125,7 +136,18 @@ def iterative_adjacency_matrix_bfs(graph: list[list[int]], start: int) ->list[in
     >>> iterative_adjacency_matrix_bfs([[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 0], [0, 0, 0, 0]], 0)
     [0, 1, 2, 3]
     """
-    pass
+    ans = []
+    q = deque()
+    q.append(start)
+    while q:
+        vertex = q.popleft()
+        if vertex not in ans:
+            ans.append(vertex)
+            for neighbor, edge in enumerate(graph[vertex]):
+                if edge:
+                    if neighbor not in ans:
+                        q.append(neighbor)
+    return ans
 
 
 def recursive_adjacency_dict_bfs(graph: dict[int, list[int]], start: int) -> list[int]:
