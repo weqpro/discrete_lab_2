@@ -183,9 +183,30 @@ def adjacency_matrix_radius(graph: list[list]) -> int:
     >>> adjacency_matrix_radius([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
     1
     >>> adjacency_matrix_radius([[0, 1, 1], [1, 0, 1], [1, 1, 0], [0, 1, 0]])
-    2
+    1
     """
-    pass
+    def find_max_distance(graph: list[list], start: int) -> int:
+        # This function finds the biggest distance from given
+        # vertex to any other vertex in a connected graph
+        visited = []
+        q = deque()
+        q.append((start, 0))
+        max_dist = -1
+        while q:
+            vertex, dist = q.popleft()
+            if vertex not in visited:
+                max_dist = max(max_dist, dist)
+                visited.append(vertex)
+                for neighbor, edge in enumerate(graph[vertex]):
+                    if edge:
+                        if neighbor not in visited:
+                            q.append((neighbor, dist + 1))
+        return max_dist
+    radius = 1e9
+    for vertex in range(len(graph)):
+        max_dist = find_max_distance(graph, vertex)
+        radius = min(radius, max_dist)
+    return radius
 
 
 def adjacency_dict_radius(graph: dict[int: list[int]]) -> int:
@@ -195,9 +216,29 @@ def adjacency_dict_radius(graph: dict[int: list[int]]) -> int:
     >>> adjacency_dict_radius({0: [1, 2], 1: [0, 2], 2: [0, 1]})
     1
     >>> adjacency_dict_radius({0: [1, 2], 1: [0, 2], 2: [0, 1], 3: [1]})
-    2
+    1
     """
-    pass
+    def find_max_distance(graph: dict[int: list[int]], start: int) -> int:
+        # This function finds the biggest distance from given
+        # vertex to any other vertex in a connected graph
+        visited = []
+        q = deque()
+        q.append((start, 0))
+        max_dist = -1
+        while q:
+            vertex, dist = q.popleft()
+            if vertex not in visited:
+                max_dist = max(max_dist, dist)
+                visited.append(vertex)
+                for neighbor in graph[vertex]:
+                    if neighbor not in visited:
+                        q.append((neighbor, dist + 1))
+        return max_dist
+    radius = 1e9
+    for vertex in graph.keys():
+        max_dist = find_max_distance(graph, vertex)
+        radius = min(radius, max_dist)
+    return radius
 
 
 if __name__ == "__main__":
