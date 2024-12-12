@@ -1,6 +1,8 @@
 """
 Lab 2 template
 """
+from collections import deque
+
 
 def read_incidence_matrix(filename: str) -> list[list]:
     """
@@ -36,7 +38,18 @@ def iterative_adjacency_dict_dfs(graph: dict[int, list[int]], start: int) -> lis
     >>> iterative_adjacency_dict_dfs({0: [1, 2], 1: [0, 2, 3], 2: [0, 1], 3: []}, 0)
     [0, 1, 2, 3]
     """
-    pass
+    ans = []
+    stack = []
+    stack.append(start)
+    while stack:
+        vertex = stack.pop()
+        if vertex not in ans:
+            ans.append(vertex)
+            graph[vertex] = sorted(graph[vertex], reverse=True)
+            for neighbor in graph[vertex]:
+                if neighbor not in ans:
+                    stack.append(neighbor)
+    return ans
 
 
 def iterative_adjacency_matrix_dfs(graph: list[list], start: int) ->list[int]:
@@ -49,7 +62,18 @@ def iterative_adjacency_matrix_dfs(graph: list[list], start: int) ->list[int]:
     >>> iterative_adjacency_matrix_dfs([[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 0], [0, 0, 0, 0]], 0)
     [0, 1, 2, 3]
     """
-    pass
+    ans = []
+    stack = []
+    stack.append(start)
+    while stack:
+        vertex = stack.pop()
+        if vertex not in ans:
+            ans.append(vertex)
+            for neighbor, edge in reversed(list(enumerate(graph[vertex]))):
+                if edge:
+                    if neighbor not in ans:
+                        stack.append(neighbor)
+    return ans
 
 
 def recursive_adjacency_dict_dfs(graph: dict[int, list[int]], start: int) -> list[int]:
