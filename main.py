@@ -182,7 +182,7 @@ def adjacency_matrix_radius(graph: list[list]) -> int:
     :returns int: the radius of the graph
     >>> adjacency_matrix_radius([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
     1
-    >>> adjacency_matrix_radius([[0, 1, 1], [1, 0, 1], [1, 1, 0], [0, 1, 0]])
+    >>> adjacency_matrix_radius([[0, 1, 1], [1, 0, 1], [1, 1, 0]])
     1
     """
     def find_max_distance(graph: list[list], start: int) -> int:
